@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- Fábio tem um quiosque de coco, ele vende somente "Água engarrafada" e "Coco fechado", faça um programa para auxiliá-lo no controle de suas vendas.
+         a) Após inserir os valores de "Água engarrafada" e "Coco fechado" e clicar no botão "Abrir o quiosque", valide as quantidades da seguinte forma:
+         a.1) Se a quantidade de "Água engarrafada" for menor que 100, exiba a mensagem "Com essa quantidade de Água engarrafada não dá para abrir o quiosque" e não faça mais nada;  
+         a.2) Se a quantidade de "Coco fechado" for menor que 200, exiba a mensagem "Com essa quantidade de Coco fechado não dá para abrir o quiosque" e não faça mais nada;
+         a.3) Se a quantidade de "Água engarrafada" estiver entre 100 e 1000, exiba a mensagem "Engarrafe mais água de coco" e siga para a validação a.4);
+         a.4) Se a quantidade de "Coco fechado" estiver entre 200 e 2000, exiba também a mensagem "Compre mais cocos" e siga para o item b).
+         b) Se as validações passarem, atualize o estoque inicial dos dois produtos no sistema e atualize também a mensagem que mostra esses estoques na tela.
+         c) Ao preencher os campos para registrar venda e clicar em "Registrar a Venda" faça o seguinte:
+         c.1) Exiba a seguinte mensagem (não deve apagar as anteriores):  
+         "Com a venda de XXXX de YYYY o saldo no estoque é de ZZZZ", OBS: 
+         XXXX é a quantidade de produto vendido;
+         YYYY é o produto que foi vendido;
+         ZZZZ é o estoque atual do produto;
+         d) Ao clicar no botão "Encerrar o Turno" faça:
+         d.1) Apague todas as mensagens na página; 
+         d.2) Exiba as seguintes mensagens:
+
+         Vendas de Água engarrafada
+         Saldo de produto no estoque: XXXX 
+         Quantidade de vendas: YYYY
+         Porcentagem das vendas: ZZZZ
+         Vendas de Coco fechado 
+         Saldo de produto no estoque: XXXX 
+         Quantidade de vendas: YYYY
+         Porcentagem das vendas: ZZZZ -->
+</head>
+<body>
+    --------------------------Abertura do Quiosque--------------------------<br>
+    Informe a quantidade de água engarrafada do estoque:
+        <input type="text" id="input_agua_engarrafada"><br>
+    Informe a quantidade de Coco fechado do estoque:
+        <input type="text" id="input_coco_fechado"><br>
+    <button onclick="exibirAbrirQuiosque()">Abrir o Quiosque</button>
+    
+    <div id="resulrt">
+        --------------------------Estoque Inicial--------------------------<br>
+                Água engarrafada: 0<br>
+                Coco fechado: 0<br>
+    </div>
+    <span id="quiosqueRegistro"></span>
+    <span id="quiosqueResultado"></span>
+</body>
+</html>
+
+<script>
+    var aguaEngarrafada = 0;
+    var cocoFechado = 0;
+    var estoqueAgua = 0;
+    var estoqueCoco = 0;
+    var totalVendaAgua = 0;
+    var totalVendaCoco = 0;
+
+    function exibirAbrirQuiosque(){
+        aguaEngarrafada = Number(input_agua_engarrafada.value);
+        cocoFechado = Number(input_coco_fechado.value);
+        estoqueAgua = aguaEngarrafada;
+        estoqueCoco = cocoFechado;
+        resulrt.innerHTML = `--------------------------Estoque Inicial--------------------------<br>
+                Água engarrafada: 0<br>
+                Coco fechado: 0<br>`;
+        if(aguaEngarrafada < 100){
+            alert(`Com essa quantidade de Água engarrafada não dá para abrir o quiosque`);
+        }
+        else if(cocoFechado < 200){
+            alert(`Com essa quantidade de Coco fechado não dá para abrir o quiosque`);
+        }
+        else{
+            if(aguaEngarrafada >= 100 && aguaEngarrafada <= 1000 ){
+                alert(`Engarrafe mais água de coco`);
+            }
+            else if(cocoFechado >= 200 && cocoFechado <= 2000){
+                alert(`Compre mais cocos`);            
+            }
+                resulrt.innerHTML = `
+                --------------------------Estoque Inicial--------------------------<br>
+                Água engarrafada: ${aguaEngarrafada}<br>
+                Coco fechado: ${cocoFechado}<br>` 
+                resulrt.innerHTML += `  
+                --------------------------Registro das operações de venda--------------------------<br>             
+                Entre com a quantidade de venda: <input id="input_qtdVenda">
+                Informe o produto vendido <select id="select_produto_vendido">
+                        <option value="agua engarrafada">Agua engarrafada</option>
+                        <option value="coco verde">Coco verde</option></select>
+                <button onclick="exibirVenda()">Registrar a Venda</button>
+                <button onclick="encerrarTurno()" style="background-color: red">Encerrar o turno</button><br>`;
+        }
+    }
+    
+    function exibirVenda(){
+        var qtdVenda = Number(input_qtdVenda.value);
+        var produto = select_produto_vendido.value;
+        quiosqueResultado.innerHTML = ``;      
+        quiosqueRegistro.innerHTML += `Com a venda de ${qtdVenda} de ${produto} o saldo no estoque é de `;
+        if(produto == "agua engarrafada"){
+            totalVendaAgua += qtdVenda;
+            estoqueAgua -= qtdVenda;
+            quiosqueRegistro.innerHTML += `${estoqueAgua}<br>`;
+        }
+        else{
+            totalVendaCoco += qtdVenda;
+            estoqueCoco -= qtdVenda;
+            quiosqueRegistro.innerHTML += `${estoqueCoco}<br>`;
+        }
+    }
+    function encerrarTurno(){
+        if(estoqueAgua < 100){
+            alert(`Com essa quantidade de Água engarrafada não dá para abrir o quiosque`);
+        }
+        else if(estoqueCoco < 200){
+            alert(`Com essa quantidade de Coco fechado não dá para abrir o quiosque`);
+        }
+        else{
+            if(estoqueAgua >= 100 && estoqueAgua <= 1000 ){
+                alert(`Engarrafe mais água de coco`);
+            }
+            else if(estoqueCoco >= 200 && estoqueCoco <= 2000){
+                alert(`Compre mais cocos`);            
+            }
+        }
+        quiosqueRegistro.innerHTML = ``;
+        quiosqueResultado.innerHTML =`
+        <br>
+        Vendas de Água engarrafada<br>
+        Saldo de produto no estoque: ${estoqueAgua} <br>
+        Quantidade de vendas: ${totalVendaAgua}<br>
+        Porcentagem das vendas: ${totalVendaAgua * 100 / aguaEngarrafada}%<br>
+        <br>
+        Vendas de Coco fechado <br>
+        Saldo de produto no estoque: ${estoqueCoco} <br>
+        Quantidade de vendas: ${totalVendaCoco}<br>
+        Porcentagem das vendas: ${totalVendaCoco * 100 / cocoFechado}%`;
+    }
+</script>
